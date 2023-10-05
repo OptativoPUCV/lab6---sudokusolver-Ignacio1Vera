@@ -101,3 +101,18 @@ sudoku.c:155:5: note: previous definition of ‘main’ with type ‘int(int,  c
 cc1: all warnings being treated as errors
 Compilation failed
 c626e2f
+Thu 05 Oct 2023 02:43:33 PM UTC: 
+ sudoku.c | 97 ++++------------------------------------------------------------
+ 1 file changed, 5 insertions(+), 92 deletions(-)
+test.c:7:1: error: expected identifier or ‘(’ before ‘char’
+    7 | char * _strdup(const char * str) {
+      | ^~~~
+test.c:245:5: error: redefinition of ‘main’
+  245 | int main( int argc, char *argv[] ) {
+      |     ^~~~
+In file included from test.c:5:
+sudoku.c:69:5: note: previous definition of ‘main’ with type ‘int(int,  char **)’
+   69 | int main( int argc, char *argv[] ){
+      |     ^~~~
+Compilation failed
+6af129a
