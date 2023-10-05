@@ -59,3 +59,45 @@ sudoku.c:122:5: note: previous definition of ‘main’ with type ‘int(int,  c
 cc1: all warnings being treated as errors
 Compilation failed
 62b1bd4
+Thu 05 Oct 2023 02:42:44 PM UTC: 
+ sudoku.c | 35 ++++++++++++++++++++++++++++++++++-
+ 1 file changed, 34 insertions(+), 1 deletion(-)
+In file included from test.c:5:
+sudoku.c: In function ‘is_valid’:
+sudoku.c:48:15: error: unused variable ‘k’ [-Werror=unused-variable]
+   48 |     int i, j, k;
+      |               ^
+sudoku.c: In function ‘get_adj_nodes’:
+sudoku.c:97:64: error: invalid application of ‘sizeof’ to incomplete type ‘List’
+   97 |                         List *new_node = (List *)malloc(sizeof(List));
+      |                                                                ^~~~
+sudoku.c:98:33: error: invalid use of incomplete typedef ‘List’
+   98 |                         new_node->data = adj_node;
+      |                                 ^~
+sudoku.c:99:33: error: invalid use of incomplete typedef ‘List’
+   99 |                         new_node->next = list;
+      |                                 ^~
+sudoku.c: In function ‘DFS’:
+sudoku.c:140:34: error: invalid use of incomplete typedef ‘List’
+  140 |             adj_nodes = adj_nodes->next;
+      |                                  ^~
+sudoku.c:142:17: error: invalid use of incomplete typedef ‘List’
+  142 |             temp->next = stack;
+      |                 ^~
+sudoku.c:147:24: error: invalid use of incomplete typedef ‘List’
+  147 |         current = stack->data;
+      |                        ^~
+sudoku.c:148:22: error: invalid use of incomplete typedef ‘List’
+  148 |         stack = stack->next;
+      |                      ^~
+test.c: At top level:
+test.c:245:5: error: redefinition of ‘main’
+  245 | int main( int argc, char *argv[] ) {
+      |     ^~~~
+In file included from test.c:5:
+sudoku.c:155:5: note: previous definition of ‘main’ with type ‘int(int,  char **)’
+  155 | int main( int argc, char *argv[] )
+      |     ^~~~
+cc1: all warnings being treated as errors
+Compilation failed
+c626e2f
