@@ -9,3 +9,24 @@ sudoku.c:48:15: error: unused variable ‘k’ [-Werror=unused-variable]
 cc1: all warnings being treated as errors
 Compilation failed
 86e7995
+Thu 05 Oct 2023 02:41:29 PM UTC: 
+ sudoku.c | 29 ++++++++++++++++++++++++++++-
+ 1 file changed, 28 insertions(+), 1 deletion(-)
+In file included from test.c:5:
+sudoku.c: In function ‘is_valid’:
+sudoku.c:48:15: error: unused variable ‘k’ [-Werror=unused-variable]
+   48 |     int i, j, k;
+      |               ^
+sudoku.c: In function ‘get_adj_nodes’:
+sudoku.c:97:64: error: invalid application of ‘sizeof’ to incomplete type ‘List’
+   97 |                         List *new_node = (List *)malloc(sizeof(List));
+      |                                                                ^~~~
+sudoku.c:98:33: error: invalid use of incomplete typedef ‘List’
+   98 |                         new_node->data = adj_node;
+      |                                 ^~
+sudoku.c:99:33: error: invalid use of incomplete typedef ‘List’
+   99 |                         new_node->next = list;
+      |                                 ^~
+cc1: all warnings being treated as errors
+Compilation failed
+eea19ed

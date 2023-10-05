@@ -76,8 +76,35 @@ int is_valid(Node *n)
 }
 
 
-List* get_adj_nodes(Node* n){
-    List* list=createList();
+List *get_adj_nodes(Node *n) 
+{
+    List *list = createList();
+    int i, j;
+
+    for (i = 0; i < 9; i++) 
+    {
+        for (j = 0; j < 9; j++) 
+        {
+            if (n->sudo[i][j] == 0) 
+            {
+                int k;
+                for (k = 1; k <= 9; k++) 
+                {
+                    Node *adj_node = copy(n);
+                    adj_node->sudo[i][j] = k;
+                    if (is_valid(adj_node)) 
+                    {
+                        List *new_node = (List *)malloc(sizeof(List));
+                        new_node->data = adj_node;
+                        new_node->next = list;
+                        list = new_node;
+                    } else 
+                        free(adj_node);
+                }
+                return list;
+            }
+        }
+    }
     return list;
 }
 
