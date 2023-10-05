@@ -116,3 +116,117 @@ sudoku.c:69:5: note: previous definition of ‘main’ with type ‘int(int,  ch
       |     ^~~~
 Compilation failed
 6af129a
+Thu 05 Oct 2023 02:45:48 PM UTC: 
+ sudoku.c | 104 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++---
+ 1 file changed, 100 insertions(+), 4 deletions(-)
+In file included from test.c:5:
+sudoku.c:13:3: error: conflicting types for ‘List’; have ‘struct <anonymous>’
+   13 | } List;
+      |   ^~~~
+In file included from test.c:4:
+list.h:7:21: note: previous declaration of ‘List’ with type ‘List’
+    7 | typedef struct List List;
+      |                     ^~~~
+In file included from test.c:5:
+sudoku.c:15:7: error: conflicting types for ‘createList’; have ‘List *()’
+   15 | List *createList() {
+      |       ^~~~~~~~~~
+In file included from test.c:4:
+list.h:12:7: note: previous declaration of ‘createList’ with type ‘List *()’
+   12 | List* createList();
+      |       ^~~~~~~~~~
+In file included from test.c:5:
+sudoku.c: In function ‘is_valid’:
+sudoku.c:57:15: error: unused variable ‘k’ [-Werror=unused-variable]
+   57 |     int i, j, k;
+      |               ^
+sudoku.c: In function ‘get_adj_nodes’:
+sudoku.c:108:40: error: assignment to ‘struct List *’ from incompatible pointer type ‘List *’ [-Werror=incompatible-pointer-types]
+  108 |                         new_node->next = list;
+      |                                        ^
+sudoku.c: In function ‘DFS’:
+sudoku.c:149:23: error: assignment to ‘List *’ from incompatible pointer type ‘struct List *’ [-Werror=incompatible-pointer-types]
+  149 |             adj_nodes = adj_nodes->next;
+      |                       ^
+sudoku.c:151:24: error: assignment to ‘struct List *’ from incompatible pointer type ‘List *’ [-Werror=incompatible-pointer-types]
+  151 |             temp->next = stack;
+      |                        ^
+sudoku.c:157:15: error: assignment to ‘List *’ from incompatible pointer type ‘struct List *’ [-Werror=incompatible-pointer-types]
+  157 |         stack = stack->next;
+      |               ^
+test.c: In function ‘adj_test1’:
+test.c:64:32: error: passing argument 1 of ‘is_empty’ from incompatible pointer type [-Werror=incompatible-pointer-types]
+   64 |     if(adj == NULL || is_empty(adj)==1){
+      |                                ^~~
+      |                                |
+      |                                List *
+In file included from test.c:4:
+list.h:14:20: note: expected ‘List *’ but argument is of type ‘List *’
+   14 | int is_empty(List* list);
+      |              ~~~~~~^~~~
+test.c:69:23: error: passing argument 1 of ‘first’ from incompatible pointer type [-Werror=incompatible-pointer-types]
+   69 |     Node* aux = first(adj);
+      |                       ^~~
+      |                       |
+      |                       List *
+In file included from test.c:4:
+list.h:16:19: note: expected ‘List *’ but argument is of type ‘List *’
+   16 | void* first(List* list);
+      |             ~~~~~~^~~~
+test.c:70:23: error: passing argument 1 of ‘next’ from incompatible pointer type [-Werror=incompatible-pointer-types]
+   70 |     Node* aux2 = next(adj);
+      |                       ^~~
+      |                       |
+      |                       List *
+In file included from test.c:4:
+list.h:17:18: note: expected ‘List *’ but argument is of type ‘List *’
+   17 | void* next(List* list);
+      |            ~~~~~~^~~~
+test.c:97:17: error: passing argument 1 of ‘is_empty’ from incompatible pointer type [-Werror=incompatible-pointer-types]
+   97 |     if(is_empty(adj)==0){
+      |                 ^~~
+      |                 |
+      |                 List *
+In file included from test.c:4:
+list.h:14:20: note: expected ‘List *’ but argument is of type ‘List *’
+   14 | int is_empty(List* list);
+      |              ~~~~~~^~~~
+test.c: In function ‘test_mod_adj’:
+test.c:163:24: error: passing argument 1 of ‘first’ from incompatible pointer type [-Werror=incompatible-pointer-types]
+  163 |     Node* aux1 = first(adj);
+      |                        ^~~
+      |                        |
+      |                        List *
+In file included from test.c:4:
+list.h:16:19: note: expected ‘List *’ but argument is of type ‘List *’
+   16 | void* first(List* list);
+      |             ~~~~~~^~~~
+test.c:164:23: error: passing argument 1 of ‘next’ from incompatible pointer type [-Werror=incompatible-pointer-types]
+  164 |     Node* aux2 = next(adj);
+      |                       ^~~
+      |                       |
+      |                       List *
+In file included from test.c:4:
+list.h:17:18: note: expected ‘List *’ but argument is of type ‘List *’
+   17 | void* next(List* list);
+      |            ~~~~~~^~~~
+test.c:165:23: error: passing argument 1 of ‘next’ from incompatible pointer type [-Werror=incompatible-pointer-types]
+  165 |     Node* aux3 = next(adj);
+      |                       ^~~
+      |                       |
+      |                       List *
+In file included from test.c:4:
+list.h:17:18: note: expected ‘List *’ but argument is of type ‘List *’
+   17 | void* next(List* list);
+      |            ~~~~~~^~~~
+test.c: At top level:
+test.c:245:5: error: redefinition of ‘main’
+  245 | int main( int argc, char *argv[] ) {
+      |     ^~~~
+In file included from test.c:5:
+sudoku.c:164:5: note: previous definition of ‘main’ with type ‘int(int,  char **)’
+  164 | int main( int argc, char *argv[] )
+      |     ^~~~
+cc1: all warnings being treated as errors
+Compilation failed
+a3f768f
