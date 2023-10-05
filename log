@@ -1,0 +1,11 @@
+Thu 05 Oct 2023 02:40:16 PM UTC: 
+ sudoku.c | 29 ++++++++++++++++++++++++++++-
+ 1 file changed, 28 insertions(+), 1 deletion(-)
+In file included from test.c:5:
+sudoku.c: In function ‘is_valid’:
+sudoku.c:48:15: error: unused variable ‘k’ [-Werror=unused-variable]
+   48 |     int i, j, k;
+      |               ^
+cc1: all warnings being treated as errors
+Compilation failed
+86e7995
