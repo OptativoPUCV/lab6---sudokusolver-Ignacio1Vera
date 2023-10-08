@@ -7,15 +7,6 @@ typedef struct{
    int sudo[9][9];
 }Node;
 
-typedef struct {
-    Node *data;
-    struct List *next;
-} List;
-
-List *createList() {
-    return NULL;
-}
-
 Node* createNode(){
   Node* n=(Node*) malloc(sizeof(Node));
   return n;
@@ -52,117 +43,30 @@ void print_node(Node* n){
     printf("\n");
 }
 
-int is_valid(Node *n) 
-{
-    int i, j, k;
-    int row_check[9][10] = {0};
-    int col_check[9][10] = {0};
-    int submatrix_check[9][10] = {0};
+int is_valid(Node* n){
 
-    for (i = 0; i < 9; i++) 
-    {
-        for (j = 0; j < 9; j++) 
-        {
-            int num = n->sudo[i][j];
-            if (num != 0) 
-            {
-                if (row_check[i][num] == 1)
-                    return 0;
-                row_check[i][num] = 1;
-
-                if (col_check[j][num] == 1)
-                    return 0;
-                col_check[j][num] = 1;
-
-                int submatrix_index = (i / 3) * 3 + (j / 3);
-                if (submatrix_check[submatrix_index][num] == 1)
-                    return 0;
-                submatrix_check[submatrix_index][num] = 1;
-            }
-        }
-    }
     return 1;
 }
 
 
-List *get_adj_nodes(Node *n) 
-{
-    List *list = createList();
-    int i, j;
-
-    for (i = 0; i < 9; i++) 
-    {
-        for (j = 0; j < 9; j++) 
-        {
-            if (n->sudo[i][j] == 0) 
-            {
-                int k;
-                for (k = 1; k <= 9; k++) 
-                {
-                    Node *adj_node = copy(n);
-                    adj_node->sudo[i][j] = k;
-                    if (is_valid(adj_node)) 
-                    {
-                        List *new_node = (List *)malloc(sizeof(List));
-                        new_node->data = adj_node;
-                        new_node->next = list;
-                        list = new_node;
-                    } else 
-                        free(adj_node);
-                }
-                return list;
-            }
-        }
-    }
+List* get_adj_nodes(Node* n){
+    List* list=createList();
     return list;
 }
 
 
-int is_final(Node *n) {
-    int i, j;
-    for (i = 0; i < 9; i++) {
-        for (j = 0; j < 9; j++) {
-            if (n->sudo[i][j] == 0) {
-                return 0;
-            }
-        }
-    }
-    return 1;
+int is_final(Node* n){
+    return 0;
 }
 
-Node *DFS(Node *initial, int *cont) {
-    List *stack = createList();
-    Node *current = initial;
-
-    while (current != NULL) {
-        (*cont)++;
-
-        if (is_final(current)) {
-            return current; 
-        }
-
-        List *adj_nodes = get_adj_nodes(current);
-
-
-        while (adj_nodes != NULL) {
-            List *temp = adj_nodes;
-            adj_nodes = adj_nodes->next;
-
-            temp->next = stack;
-            stack = temp;
-        }
-
-        free(current);
-        current = stack->data;
-        stack = stack->next;
-    }
-
-    return NULL;
+Node* DFS(Node* initial, int* cont){
+  return NULL;
 }
 
 
-int main( int argc, char *argv[] )
-{
+
+/*
+int main( int argc, char *argv[] ){
 
   Node* initial= read_file("s12a.txt");;
 
@@ -172,4 +76,4 @@ int main( int argc, char *argv[] )
   print_node(final);
 
   return 0;
-}
+}*/

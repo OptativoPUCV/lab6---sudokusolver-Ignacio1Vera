@@ -230,3 +230,9 @@ sudoku.c:164:5: note: previous definition of ‘main’ with type ‘int(int,  c
 cc1: all warnings being treated as errors
 Compilation failed
 a3f768f
+Sun 08 Oct 2023 11:55:48 PM UTC: 
+ sudoku.c | 108 ++++-----------------------------------------------------------
+ 1 file changed, 6 insertions(+), 102 deletions(-)
+ tests:  0|5
+total_score: 0/70
+387274a
