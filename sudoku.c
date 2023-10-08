@@ -165,5 +165,8 @@ int main(int argc, char* argv[]) {
     printf("iterations:%d\n", cont);
     print_node(final);
 
+    free(final); // Libera la memoria del nodo final
+    free(initial); // Libera la memoria del nodo inicial
+
     return 0;
 }

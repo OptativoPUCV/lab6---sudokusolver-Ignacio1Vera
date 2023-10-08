@@ -263,3 +263,30 @@ sudoku.c:160:5: note: previous definition of ‘main’ with type ‘int(int,  c
 cc1: all warnings being treated as errors
 Compilation failed
 220e7a6
+Sun 08 Oct 2023 11:58:55 PM UTC: 
+ sudoku.c | 3 +++
+ 1 file changed, 3 insertions(+)
+In file included from test.c:5:
+sudoku.c: In function ‘DFS’:
+sudoku.c:135:13: error: implicit declaration of function ‘isEmpty’; did you mean ‘is_empty’? [-Werror=implicit-function-declaration]
+  135 |     while (!isEmpty(stack)) {
+      |             ^~~~~~~
+      |             is_empty
+sudoku.c:147:22: error: void value not ignored as it ought to be
+  147 |         while ((next = popFront(adj_nodes)) != NULL) {
+      |                      ^
+sudoku.c:154:9: error: implicit declaration of function ‘freeList’; did you mean ‘createList’? [-Werror=implicit-function-declaration]
+  154 |         freeList(adj_nodes);
+      |         ^~~~~~~~
+      |         createList
+test.c: At top level:
+test.c:245:5: error: redefinition of ‘main’
+  245 | int main( int argc, char *argv[] ) {
+      |     ^~~~
+In file included from test.c:5:
+sudoku.c:160:5: note: previous definition of ‘main’ with type ‘int(int,  char **)’
+  160 | int main(int argc, char* argv[]) {
+      |     ^~~~
+cc1: all warnings being treated as errors
+Compilation failed
+8904326
