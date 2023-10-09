@@ -3,12 +3,12 @@
 #include "list.h"
 
 typedef struct {
-   int sudo[9][9];
+    int sudo[9][9];
 } Node;
 
 Node* createNode() {
-  Node* n = (Node*) malloc(sizeof(Node));
-  return n;
+    Node* n = (Node*) malloc(sizeof(Node));
+    return n;
 }
 
 Node* copy(Node* n) {
@@ -43,89 +43,52 @@ void print_node(Node* n) {
 }
 
 int is_valid(Node* n) {
-    int i, j, k;
-    int row[10] = {0};
-    int col[10] = {0};
-    int subgrid[10] = {0};
+    int rows[9][10] = {0};
+    int cols[9][10] = {0};
+    int subs[9][10] = {0};
 
-    // Verificar filas y columnas
-    for (i = 0; i < 9; i++) {
-        for (j = 0; j < 9; j++) {
-            if (n->sudo[i][j] != 0) {
-                if (row[n->sudo[i][j]] == 1)
-                    return 0; // Número repetido en la misma fila
-                row[n->sudo[i][j]] = 1;
-
-                if (col[n->sudo[i][j]] == 1)
-                    return 0; // Número repetido en la misma columna
-                col[n->sudo[i][j]] = 1;
-            }
-        }
-        // Reiniciar los arreglos de filas y columnas para la siguiente fila
-        for (k = 1; k <= 9; k++) {
-            row[k] = 0;
-            col[k] = 0;
-        }
-    }
-
-    // Verificar subgrids de 3x3
-    for (i = 0; i < 9; i += 3) {
-        for (j = 0; j < 9; j += 3) {
-            for (int x = i; x < i + 3; x++) {
-                for (int y = j; y < j + 3; y++) {
-                    if (n->sudo[x][y] != 0) {
-                        if (subgrid[n->sudo[x][y]] == 1)
-                            return 0; // Número repetido en el mismo subgrid
-                        subgrid[n->sudo[x][y]] = 1;
-                    }
+    for (int i = 0; i < 9; i++) {
+        for (int j = 0; j < 9; j++) {
+            int num = n->sudo[i][j];
+            if (num != 0) {
+                if (rows[i][num] || cols[j][num] || subs[(i / 3) * 3 + j / 3][num]) {
+                    return 0;
                 }
-            }
-            // Reiniciar el arreglo de subgrids para el siguiente subgrid
-            for (k = 1; k <= 9; k++) {
-                subgrid[k] = 0;
+                rows[i][num] = 1;
+                cols[j][num] = 1;
+                subs[(i / 3) * 3 + j / 3][num] = 1;
             }
         }
     }
-
-    return 1; // El estado es válido
+    return 1;
 }
 
 List* get_adj_nodes(Node* n) {
     List* list = createList();
-    int i, j;
-
-    // Encuentra la primera casilla vacía
-    for (i = 0; i < 9; i++) {
-        for (j = 0; j < 9; j++) {
-            if (n->sudo[i][j] == 0) {
-                break;
-            }
-        }
-        if (j < 9) {
-            break;
-        }
-    }
-
-    // Genera nodos adyacentes cambiando el valor de la primera casilla vacía
-    for (int num = 1; num <= 9; num++) {
-        Node* newNode = copy(n);
-        newNode->sudo[i][j] = num;
-        pushBack(list, newNode);
-    }
-
-    return list;
-}
-
-int is_final(Node* n) {
-    // Verifica si todas las casillas están llenas
     for (int i = 0; i < 9; i++) {
         for (int j = 0; j < 9; j++) {
             if (n->sudo[i][j] == 0) {
-                return 0; // Hay al menos una casilla vacía
+                for (int k = 1; k <= 9; k++) {
+                    Node* newNode = copy(n);
+                    newNode->sudo[i][j] = k;
+                    pushBack(list, newNode);
+                }
+                return list;  // Solo necesitas generar nodos adyacentes para la primera casilla vacía encontrada
             }
         }
     }
-    return 1; // Todas las casillas están llenas
+    return list;  // Si no hay casillas vacías, devuelve una lista vacía
+}
+
+int is_final(Node* n) {
+    for (int i = 0; i < 9; i++) {
+        for (int j = 0; j < 9; j++) {
+            if (n->sudo[i][j] == 0) {
+                return 0;  // Si aún hay una casilla vacía, no es un estado final
+            }
+        }
+    }
+    return 1;  // Si no hay casillas vacías, es un estado final
 }
 
 Node* DFS(Node* initial, int* cont) {
@@ -135,26 +98,26 @@ Node* DFS(Node* initial, int* cont) {
     while (!isEmpty(stack)) {
         Node* current = top(stack);
         pop(stack);
-        (*cont)++; // Incrementa el contador de iteraciones
+        (*cont)++;
 
         if (is_final(current)) {
-            // Encontramos una solución
-            return current;
+            return current;  // Encontramos una solución
         }
 
         List* adj_nodes = get_adj_nodes(current);
-        Node* next;
-        while ((next = popFront(adj_nodes)) != NULL) {
-            if (is_valid(next)) {
-                push(stack, next); // Agrega nodos válidos al stack
-            } else {
-                free(next); // Libera memoria de nodos no válidos
+        ListNode* current_node = adj_nodes->first;
+        while (current_node != NULL) {
+            Node* adj_node = (Node*)current_node->data;
+            if (is_valid(adj_node)) {
+                push(stack, adj_node);
             }
+            current_node = current_node->next;
         }
         freeList(adj_nodes);
+        free(current);
     }
 
-    return NULL; // No se encontró solución
+    return NULL;  // No se encontró una solución
 }
 
 int main(int argc, char* argv[]) {
@@ -163,10 +126,11 @@ int main(int argc, char* argv[]) {
     int cont = 0;
     Node* final = DFS(initial, &cont);
     printf("iterations:%d\n", cont);
-    print_node(final);
-
-    free(final); // Libera la memoria del nodo final
-    free(initial); // Libera la memoria del nodo inicial
+    if (final) {
+        print_node(final);
+    } else {
+        printf("No se encontró una solución.\n");
+    }
 
     return 0;
 }

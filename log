@@ -290,3 +290,39 @@ sudoku.c:160:5: note: previous definition of ‘main’ with type ‘int(int,  c
 cc1: all warnings being treated as errors
 Compilation failed
 8904326
+Mon 09 Oct 2023 12:02:37 AM UTC: 
+ sudoku.c | 110 +++++++++++++++++++++------------------------------------------
+ 1 file changed, 37 insertions(+), 73 deletions(-)
+In file included from test.c:5:
+sudoku.c: In function ‘DFS’:
+sudoku.c:98:13: error: implicit declaration of function ‘isEmpty’; did you mean ‘is_empty’? [-Werror=implicit-function-declaration]
+   98 |     while (!isEmpty(stack)) {
+      |             ^~~~~~~
+      |             is_empty
+sudoku.c:108:9: error: unknown type name ‘ListNode’
+  108 |         ListNode* current_node = adj_nodes->first;
+      |         ^~~~~~~~
+sudoku.c:108:43: error: invalid use of incomplete typedef ‘List’
+  108 |         ListNode* current_node = adj_nodes->first;
+      |                                           ^~
+sudoku.c:110:49: error: request for member ‘data’ in something not a structure or union
+  110 |             Node* adj_node = (Node*)current_node->data;
+      |                                                 ^~
+sudoku.c:114:40: error: request for member ‘next’ in something not a structure or union
+  114 |             current_node = current_node->next;
+      |                                        ^~
+sudoku.c:116:9: error: implicit declaration of function ‘freeList’; did you mean ‘createList’? [-Werror=implicit-function-declaration]
+  116 |         freeList(adj_nodes);
+      |         ^~~~~~~~
+      |         createList
+test.c: At top level:
+test.c:245:5: error: redefinition of ‘main’
+  245 | int main( int argc, char *argv[] ) {
+      |     ^~~~
+In file included from test.c:5:
+sudoku.c:123:5: note: previous definition of ‘main’ with type ‘int(int,  char **)’
+  123 | int main(int argc, char* argv[]) {
+      |     ^~~~
+cc1: all warnings being treated as errors
+Compilation failed
+03da240
