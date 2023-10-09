@@ -368,3 +368,16 @@ sudoku.c:167:12: error: implicit declaration of function ‘freeList’; did you
 cc1: all warnings being treated as errors
 Compilation failed
 4165edb
+Mon 09 Oct 2023 12:26:24 AM UTC: 
+ sudoku.c | 11 +++++------
+ 1 file changed, 5 insertions(+), 6 deletions(-)
+In file included from test.c:5:
+sudoku.c: In function ‘DFS’:
+sudoku.c:159:37: error: void value not ignored as it ought to be
+  159 |             Node* next_valid_node = popFront(adj_nodes);
+      |                                     ^~~~~~~~
+sudoku.c:163:33: error: void value not ignored as it ought to be
+  163 |                 next_valid_node = popFront(adj_nodes);
+      |                                 ^
+Compilation failed
+a161055
