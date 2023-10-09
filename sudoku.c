@@ -36,6 +36,7 @@ Node* read_file (char* file_name)
   return n;
 }
 
+
 void print_node(Node* n)
 {
     int i,j;
@@ -47,6 +48,7 @@ void print_node(Node* n)
     }
     printf("\n");
 }
+
 
 int is_valid(Node* n){
     int row[9][10] = {0};  
@@ -71,6 +73,7 @@ int is_valid(Node* n){
     }
     return 1;
 }
+
 
 
 List* get_adj_nodes(Node* n)
@@ -109,32 +112,65 @@ int is_final(Node* n)
 }
 
 
-Node* DFS(Node* n, int* cont){
+
+
+Node* DFS(Node* n, int* cont)
+{
    Stack* S = createStack();
    push(S, n);
 
    while (!is_empty(S)) {
        Node* current = top(S);
-       pop(S);
-
-       (*cont)++;  // Incrementar el contador de iteraciones
-
-       if (is_final(current)) {
-           return current;  // Encontramos una solución
+       int found_empty = 0;
+       int row = -1, col = -1;
+       for (int i = 0; i < 9 && !found_empty; i++) 
+       {
+           for (int j = 0; j < 9 && !found_empty; j++) 
+           {
+               if (current->sudo[i][j] == 0) 
+               {
+                   row = i;
+                   col = j;
+                   found_empty = 1;
+               }
+           }
        }
 
-       List* adj_nodes = get_adj_nodes(current);
-       Node* next_node = first(adj_nodes);
-       while (next_node != NULL) {
-           push(S, next_node);
-           next_node = next(adj_nodes);
+       if (!found_empty)
+           return current;
+
+       List* adj_nodes = createList();
+       for (int num = 1; num <= 9; num++) 
+       {
+           Node* next_node = copy(current);
+           next_node->sudo[row][col] = num;
+           if (is_valid(next_node)) 
+               push(adj_nodes, next_node);
+           else 
+               free(next_node);
        }
 
-       // Liberar memoria del nodo actual
-       free(current);
+       if (is_empty(adj_nodes)) 
+       {
+           pop(S);
+           free(current);
+       } 
+       else 
+       {
+           
+           Node* next_valid_node = popFront(adj_nodes);
+           while (next_valid_node != NULL) 
+           {
+               push(S, next_valid_node);
+               next_valid_node = popFront(adj_nodes);
+           }
+           freeList(adj_nodes);
+       }
+
+       (*cont)++;
    }
 
-   return NULL;  // No se encontró una solución
+   return NULL;
 }
 
 
