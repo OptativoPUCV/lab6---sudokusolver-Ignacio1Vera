@@ -114,22 +114,18 @@ int is_final(Node* n)
 
 
 
-Node* DFS(Node* n, int* cont) 
-{
+Node* DFS(Node* n, int* cont) {
     Stack* S = createStack();
     push(S, n);
 
-    while (!is_empty(S)) 
-    {
+    while (!is_empty(S)) {
         Node* current = top(S);
+
         int found_empty = 0;
         int row = -1, col = -1;
-        for (int i = 0; i < 9 && !found_empty; i++) 
-        {
-            for (int j = 0; j < 9 && !found_empty; j++) 
-            {
-                if (current->sudo[i][j] == 0) 
-                {
+        for (int i = 0; i < 9 && !found_empty; i++) {
+            for (int j = 0; j < 9 && !found_empty; j++) {
+                if (current->sudo[i][j] == 0) {
                     row = i;
                     col = j;
                     found_empty = 1;
@@ -140,38 +136,35 @@ Node* DFS(Node* n, int* cont)
         if (!found_empty)
             return current;
 
+
         List* adj_nodes = createList();
-        for (int num = 1; num <= 9; num++) 
-        {
+        for (int num = 1; num <= 9; num++) {
             Node* next_node = copy(current);
             next_node->sudo[row][col] = num;
-            if (is_valid(next_node))
+            if (is_valid(next_node)) {
                 push(adj_nodes, next_node);
-            else
+            } else {
                 free(next_node);
+            }
         }
 
-        if (is_empty(adj_nodes)) 
-        {
+        if (is_empty(adj_nodes)) {
             pop(S);
             free(current);
         } else {
             Node* next_valid_node = popFront(adj_nodes);
-            while (next_valid_node != NULL) 
-            {
+            while (next_valid_node != NULL) {
                 push(S, next_valid_node);
                 next_valid_node = popFront(adj_nodes);
             }
-            clean(adj_nodes);
-            free(adj_nodes);
+            freeList(adj_nodes);
         }
 
         (*cont)++;
     }
 
-    return NULL;
+    return NULL; 
 }
-
 
 
 

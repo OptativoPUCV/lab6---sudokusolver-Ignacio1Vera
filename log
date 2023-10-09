@@ -381,3 +381,21 @@ sudoku.c:163:33: error: void value not ignored as it ought to be
       |                                 ^
 Compilation failed
 a161055
+Mon 09 Oct 2023 12:28:02 AM UTC: 
+ sudoku.c | 34 ++++++++++++++--------------------
+ 1 file changed, 14 insertions(+), 20 deletions(-)
+In file included from test.c:5:
+sudoku.c: In function ‘DFS’:
+sudoku.c:155:37: error: void value not ignored as it ought to be
+  155 |             Node* next_valid_node = popFront(adj_nodes);
+      |                                     ^~~~~~~~
+sudoku.c:158:33: error: void value not ignored as it ought to be
+  158 |                 next_valid_node = popFront(adj_nodes);
+      |                                 ^
+sudoku.c:160:13: error: implicit declaration of function ‘freeList’; did you mean ‘createList’? [-Werror=implicit-function-declaration]
+  160 |             freeList(adj_nodes);
+      |             ^~~~~~~~
+      |             createList
+cc1: all warnings being treated as errors
+Compilation failed
+8da7a86
